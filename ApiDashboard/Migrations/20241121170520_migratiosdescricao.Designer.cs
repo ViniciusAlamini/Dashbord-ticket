@@ -3,6 +3,7 @@ using System;
 using ApiDashboard.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiDashboard.Migrations
 {
     [DbContext(typeof(DashboardContext))]
-    partial class DashboardContextModelSnapshot : ModelSnapshot
+    [Migration("20241121170520_migratiosdescricao")]
+    partial class migratiosdescricao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,16 +94,6 @@ namespace ApiDashboard.Migrations
                     b.Property<int>("ModuloId")
                         .HasColumnType("integer")
                         .HasColumnName("FK_ID_MODULE");
-
-                    b.Property<string>("Prioridade")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("PRIORITY");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("STATUS");
 
                     b.Property<string>("Titulo")
                         .IsRequired()

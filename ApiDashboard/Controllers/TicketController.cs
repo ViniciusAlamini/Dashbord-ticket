@@ -79,5 +79,31 @@ namespace ApiDashboard.Controllers
                 return BadRequest($"Erro ao criar ticket: {ex.Message}");
             }
         }
+
+        [HttpGet("SelecionarTodos")]
+        public async Task<IActionResult> SelecionarTodosAsync(){
+            try
+            {
+                var tickets = await _ticketRepository.SelecionarTodosAsync();
+                return Ok(tickets);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Algum erro ocorreu durante a requisição: {ex.Message}");
+            }
+        }
+
+        [HttpGet("BuscarPorIdInclude")]
+        public async Task<IActionResult> BuscarPorIdInclude(int id){
+            try
+            {
+                var ticket = await _ticketRepository.BuscarPorIdInclude(id);
+                return Ok(ticket);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Algum erro ocorreu durante a requisição: {ex.Message}");
+            }
+        }
     }
 }

@@ -15,6 +15,16 @@ namespace ApiDashboard.Models
         
         public string Titulo { get; set; }
 
+        [Column("DESCRIPTION")]
+
+        public string Descricao { get; set; }
+
+        [Column("STATUS")]
+        public string Status { get; set; }
+
+        [Column("PRIORITY")]
+        public string Prioridade { get; set; }
+
         [Column("OPENING_DATE")]
         public DateOnly DataAbertura { get; set; }
 

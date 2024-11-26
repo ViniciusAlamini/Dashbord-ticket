@@ -119,8 +119,21 @@ namespace ApiDashboard.Repository
             return ticket;
         }
 
+        public async Task<IEnumerable<Ticket>> SelecionarTodosAsync()
+        {
+           return await _context.Tickets
+                .Include(t => t.Cliente) // include para que seja exebido o navegation no retorno do json
+                .Include(t => t.Modulo)
+                .ToListAsync();
+        }
 
-
+        public async Task<Ticket> BuscarPorIdInclude(int id)
+        {
+            return await _context.Tickets
+                .Include(t => t.Cliente)
+                .Include(t => t.Modulo)
+                .FirstOrDefaultAsync(t => t.TicketId == id);
+        }
     }
 
 }

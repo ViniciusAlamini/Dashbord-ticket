@@ -1,0 +1,109 @@
+<div class="container-fluid px-4">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-primary text-white">
+        <h2 class="mb-0">Detalhes do Ticket</h2>
+      </div>
+      <div class="card-body" *ngIf="ticket">
+        <form>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label fw-bold">Título</label>
+                <input [(ngModel)]="ticket.titulo" name="titulo" class="form-control" [readonly]="!isEditing" 
+                       [ngClass]="{'bg-light': !isEditing}" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label fw-bold">Cliente</label>
+                <input [(ngModel)]="ticket.cliente.nome" name="cliente" class="form-control" readonly 
+                       class="bg-light" />
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label class="form-label fw-bold">Descrição</label>
+            <textarea [(ngModel)]="ticket.descricao" name="descricao" 
+                      class="form-control" 
+                      [readonly]="!isEditing"
+                      [ngClass]="{'bg-light': !isEditing}"
+                      rows="4"></textarea>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group mb-3">
+                <label class="form-label fw-bold">Prioridade</label>
+                <select [(ngModel)]="ticket.prioridade" name="prioridade" 
+                        class="form-select" 
+                        [disabled]="!isEditing">
+                  <option>Baixa</option>
+                  <option>Média</option>
+                  <option>Alta</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group mb-3">
+                <label class="form-label fw-bold">Status</label>
+                <select [(ngModel)]="ticket.status" name="status" 
+                        class="form-select" 
+                        [disabled]="!isEditing">
+                  <option>Aberto</option>
+                  <option>Em Andamento</option>
+                  <option>Finalizado</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group mb-3">
+                <label class="form-label fw-bold">Módulo</label>
+                <input [(ngModel)]="ticket.modulo.nome" name="modulo" 
+                       class="form-control bg-light" readonly />
+              </div>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label fw-bold">Data de Abertura</label>
+                <input [(ngModel)]="ticket.dataAbertura" type="date" 
+                       name="dataAbertura" class="form-control" 
+                       [readonly]="!isEditing"
+                       [ngClass]="{'bg-light': !isEditing}" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label class="form-label fw-bold">Data de Encerramento</label>
+                <input [(ngModel)]="ticket.dataEncerramento" type="date" 
+                       name="dataEncerramento" class="form-control bg-light" 
+                       readonly />
+              </div>
+            </div>
+          </div>
+        </form>
+  
+        <div class="d-flex justify-content-between mt-4">
+          <div>
+            <button class="btn btn-primary me-2" *ngIf="!isEditing" (click)="isEditing = true">
+              <i class="bi bi-pencil me-1"></i>Editar
+            </button>
+            <button class="btn btn-success me-2" *ngIf="isEditing" (click)="salvarAlteracoes()">
+              <i class="bi bi-save me-1"></i>Salvar Alterações
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-danger me-2" (click)="finalizarTicket()">
+              <i class="bi bi-check-circle me-1"></i>Finalizar Ticket
+            </button>
+            <button class="btn btn-secondary" routerLink="/">
+              <i class="bi bi-arrow-left me-1"></i>Voltar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

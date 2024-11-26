@@ -1,0 +1,95 @@
+<div class="container-fluid px-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Lista de Tickets</h3>
+            <div class="d-flex gap-2">
+              <input 
+                [(ngModel)]="clienteFilter" 
+                placeholder="Filtrar por Cliente" 
+                class="form-control form-control-sm w-auto" 
+              />
+              <input 
+                [(ngModel)]="moduloFilter" 
+                placeholder="Filtrar por Módulo" 
+                class="form-control form-control-sm w-auto" 
+              />
+              <select [(ngModel)]="statusFilter" class="form-select form-select-sm w-auto">
+                <option value="">Todos Status</option>
+                <option value="Aberto">Aberto</option>
+                <option value="Em Andamento">Em Andamento</option>
+                <option value="Finalizado">Finalizado</option>
+              </select>
+              <select [(ngModel)]="prioridadeFilter" class="form-select form-select-sm w-auto">
+                <option value="">Todas Prioridades</option>
+                <option value="Baixa">Baixa</option>
+                <option value="Média">Média</option>
+                <option value="Alta">Alta</option>
+              </select>
+            </div>
+          </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0" *ngIf="tickets && tickets.length > 0">
+            <thead class="table-light">
+              <tr>
+                <th>Título</th>
+                <th>Data Abertura</th>
+                <th>Status</th>
+                <th>Data Encerramento</th>
+                <th>Cliente</th>
+                <th>Módulo</th>
+                <th>Prioridade</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of tickets | 
+              filterTickets:statusFilter:prioridadeFilter:clienteFilter:moduloFilter" 
+                [ngClass]="{
+                  'table-success': ticket.status === 'Finalizado',
+                  'table-warning': ticket.status === 'Em Andamento',
+                  'table-danger': ticket.prioridade === 'Alta',
+                  'table-info': ticket.prioridade === 'Média',
+                  'table-light': ticket.prioridade === 'Baixa'
+                }">
+                <td>{{ ticket.titulo }}</td>
+                <td>{{ ticket.dataAbertura | date:'dd/MM/yyyy' }}</td>
+                <td>
+                  <span class="badge" 
+                    [ngClass]="{
+                      'bg-success': ticket.status === 'Finalizado',
+                      'bg-warning text-dark': ticket.status === 'Em Andamento',
+                      'bg-danger': ticket.status === 'Aberto'
+                    }">
+                    {{ ticket.status }}
+                  </span>
+                </td>
+                <td>{{ ticket.dataEncerramento | date:'dd/MM/yyyy' }}</td>
+                <td>{{ ticket.cliente.nome }}</td>
+                <td>{{ ticket.modulo.nome }}</td>
+                <td>
+                  <span class="badge" 
+                    [ngClass]="{
+                      'bg-danger': ticket.prioridade === 'Alta',
+                      'bg-warning text-dark': ticket.prioridade === 'Média',
+                      'bg-info text-white': ticket.prioridade === 'Baixa'
+                    }">
+                    {{ ticket.prioridade }}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn btn-primary btn-sm" 
+                    [routerLink]="['/ticket', ticket.ticketId]">
+                    Detalhes
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="!tickets || tickets.length === 0" class="text-center p-4">
+            <p class="text-muted">Nenhum ticket encontrado</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
